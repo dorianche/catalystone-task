@@ -41,4 +41,9 @@ public class JdbcProductService {
     public Product create(Product product) {
         return productRepo.create(product);
     }
+
+    public List<Product> getProductByName(String name) {
+        return productRepo.getProductByName(name);
+    }
+    
 }

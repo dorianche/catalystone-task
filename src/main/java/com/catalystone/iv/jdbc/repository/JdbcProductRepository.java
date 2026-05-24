@@ -76,7 +76,7 @@ public class JdbcProductRepository {
                 rs.getString("category"));
     }
 
-        public Product create(Product product) {
+    public Product create(Product product) {
         var sql = "INSERT INTO PRODUCT (id, name, price, category) VALUES (:id, :name, :price, :category)";
         jdbcTemplate.update(sql, Map.of(
             "id", product.getId(),
@@ -84,7 +84,21 @@ public class JdbcProductRepository {
             "price", product.getPrice(),
             "category", product.getCategory()
         ));
-        return product;
-        }
+            return product;
+    }
+
+    public List<Product> getProductByName(String name) {
+        var sql = """
+                SELECT id, name, price, category
+                FROM PRODUCT
+                WHERE name = :name
+                """;
+
+        return jdbcTemplate.query(
+                sql,
+                Map.of("name", name),
+                (rs, rowNum) -> product(rs)
+        );
+    }
 
 }
