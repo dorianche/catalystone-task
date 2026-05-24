@@ -76,4 +76,15 @@ public class JdbcProductRepository {
                 rs.getString("category"));
     }
 
+        public Product create(Product product) {
+        var sql = "INSERT INTO PRODUCT (id, name, price, category) VALUES (:id, :name, :price, :category)";
+        jdbcTemplate.update(sql, Map.of(
+            "id", product.getId(),
+            "name", product.getName(),
+            "price", product.getPrice(),
+            "category", product.getCategory()
+        ));
+        return product;
+        }
+
 }

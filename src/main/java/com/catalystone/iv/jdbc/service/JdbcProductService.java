@@ -36,5 +36,9 @@ public class JdbcProductService {
             (a, b) -> a,
             LinkedHashMap::new
         ));
-}
+    }
+
+    public Product create(Product product) {
+        return productRepo.create(product);
+    }
 }

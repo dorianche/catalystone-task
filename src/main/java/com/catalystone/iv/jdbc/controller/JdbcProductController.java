@@ -12,6 +12,9 @@ import com.catalystone.iv.jdbc.model.Product;
 import com.catalystone.iv.jdbc.service.JdbcProductService;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @AllArgsConstructor
@@ -29,6 +32,12 @@ public class JdbcProductController {
     public ResponseEntity<Map<String, Integer>> getCategoryCount() {
         return ResponseEntity.ok(productService.getCategoryCount());
     }
+
+    @PostMapping
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        return ResponseEntity.ok(productService.create(product));
+    }
+    
 
 }
 
