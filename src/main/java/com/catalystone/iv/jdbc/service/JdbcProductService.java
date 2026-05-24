@@ -1,11 +1,17 @@
 package com.catalystone.iv.jdbc.service;
 
-import com.catalystone.iv.jdbc.model.Product;
-import com.catalystone.iv.jdbc.repository.JdbcProductRepository;
-import lombok.AllArgsConstructor;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.catalystone.iv.jdbc.model.CategoryCount;
+import com.catalystone.iv.jdbc.model.Product;
+import com.catalystone.iv.jdbc.repository.JdbcProductRepository;
+
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
@@ -20,4 +26,15 @@ public class JdbcProductService {
     public List<Product> getAllProducts() {
         return productRepo.allProducts();
     }
+
+    public Map<String, Integer> getCategoryCount() {
+    return productRepo.categoryCount()
+        .stream()
+        .collect(Collectors.toMap(
+            CategoryCount::getCategory,
+            CategoryCount::getCount,
+            (a, b) -> a,
+            LinkedHashMap::new
+        ));
+}
 }

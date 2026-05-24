@@ -1,17 +1,19 @@
 package com.catalystone.iv.jdbc.repository;
 
-import com.catalystone.iv.jdbc.model.CategoryCount;
-import com.catalystone.iv.jdbc.model.Product;
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.catalystone.iv.jdbc.model.CategoryCount;
+import com.catalystone.iv.jdbc.model.Product;
+
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 
 @Repository
 @AllArgsConstructor
@@ -38,7 +40,18 @@ public class JdbcProductRepository {
     }
 
     public List<CategoryCount> categoryCount() {
-        return null;
+    return jdbcTemplate.query(
+        """
+        SELECT category, COUNT(*) AS count
+        FROM PRODUCT
+        GROUP BY category
+        ORDER BY category
+            """,
+            (rs, rowNum) -> new CategoryCount(
+                rs.getString("category"),
+                rs.getInt("count")
+            )
+        );
     }
 
     public List<Long> allIdsAlphabeticalOrder() {
