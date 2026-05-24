@@ -42,8 +42,8 @@ public class JdbcProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProductByName(@RequestParam String name) {
-        return ResponseEntity.ok(productService.getProductByName(name));
+    public ResponseEntity<List<Product>> getProductsByName(@RequestParam String name) {
+        return ResponseEntity.ok(productService.getProductsByName(name));
     }
     
     

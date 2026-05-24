@@ -19,14 +19,16 @@ public interface JpaProductRepository extends JpaRepository<JpaProduct, Long> {
     @Query(value = "write your query", nativeQuery = true)
     JpaProduct productWithXHighestPrice(int parameter);
 
-    @Query(value = """
-       SELECT p.category, COUNT(p)
-       FROM JpaProduct p
-       GROUP BY p.category
-       """, nativeQuery = true)
+    @Query("""
+        SELECT new com.catalystone.iv.jpa.model.CategoryCount(p.category, COUNT(p))
+        FROM JpaProduct p
+        GROUP BY p.category
+        """)
     List<CategoryCount> categoryCount();
 
     @Query(value = "write your query", nativeQuery = true)
     List<Long> allIdsAlphabeticalOrder();
+
+    List<JpaProduct> getProductsByName(String name);
 
 }

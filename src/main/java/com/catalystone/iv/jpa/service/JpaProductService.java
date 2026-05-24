@@ -36,6 +36,14 @@ public class JpaProductService {
             .collect(Collectors.toMap(
                 CategoryCount::getCategory,
                 cc -> (int) cc.getCount()
-));
+        ));
+    }
+
+    public JpaProduct create(JpaProduct product) {
+        return productRepo.save(product);
+    }
+
+    public List<JpaProduct> getProductsWithName(String name) {
+        return productRepo.getProductsByName(name);
     }
 }

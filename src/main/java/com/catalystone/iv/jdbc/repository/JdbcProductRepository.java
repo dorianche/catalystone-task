@@ -87,7 +87,7 @@ public class JdbcProductRepository {
             return product;
     }
 
-    public List<Product> getProductByName(String name) {
+    public List<Product> getProductsByName(String name) {
         var sql = """
                 SELECT id, name, price, category
                 FROM PRODUCT
