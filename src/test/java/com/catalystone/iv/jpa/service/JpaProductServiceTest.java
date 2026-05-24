@@ -1,15 +1,14 @@
 package com.catalystone.iv.jpa.service;
 
-import com.catalystone.iv.IvApplicationTests;
-import com.catalystone.iv.jpa.model.JpaProduct;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.catalystone.iv.IvApplicationTests;
+import com.catalystone.iv.jpa.model.JpaProduct;
 
 class JpaProductServiceTest extends IvApplicationTests {
 
@@ -27,7 +26,10 @@ class JpaProductServiceTest extends IvApplicationTests {
     }
 
     private List<String> doSomething(List<JpaProduct> allProducts) {
-        return null;
+        return allProducts.stream()
+                .map(JpaProduct::getName)
+                .distinct()
+                .toList();
     }
 
 

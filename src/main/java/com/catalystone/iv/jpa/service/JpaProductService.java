@@ -1,6 +1,7 @@
 package com.catalystone.iv.jpa.service;
 
 import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,15 @@ public class JpaProductService {
     }
 
     public Map<Long, Double> getIdPriceMappingInAscOrder(List<Long> ids) {
-     return null;
+        return productRepo.findAllById(ids)
+            .stream()
+            .sorted((left, right) -> left.getId().compareTo(right.getId()))
+            .collect(Collectors.toMap(
+                JpaProduct::getId,
+                JpaProduct::getPrice,
+                (left, right) -> left,
+                LinkedHashMap::new
+            ));
     }
 
     public Map<String, Integer> getCategoryCount() {
