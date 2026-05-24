@@ -1,0 +1,24 @@
+[versions]
+springBoot = "4.0.6"
+lombok = "1.18.42"
+
+[libraries]
+spring-boot-bom          = { group = "org.springframework.boot", name = "spring-boot-dependencies",    version.ref = "springBoot" }
+spring-boot-starter      = { group = "org.springframework.boot", name = "spring-boot-starter" }
+spring-boot-starter-web  = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+spring-boot-starter-jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-jdbc" }
+spring-boot-starter-jpa  = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
+spring-boot-starter-actuator  = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
+h2                       = { group = "com.h2database",           name = "h2" }
+flyway-core              = { group = "org.flywaydb",             name = "flyway-core" }
+lombok                   = { group = "org.projectlombok",        name = "lombok",                        version.ref = "lombok" }
+junit-jupiter-api        = { group = "org.junit.jupiter",        name = "junit-jupiter-api" }
+junit-jupiter-engine     = { group = "org.junit.jupiter",        name = "junit-jupiter-engine" }
+mockito-junit-jupiter    = { group = "org.mockito",              name = "mockito-junit-jupiter" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
+
+
+
