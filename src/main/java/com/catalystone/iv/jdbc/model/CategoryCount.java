@@ -1,9 +1,9 @@
 package com.catalystone.iv.jdbc.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class CategoryCount {
     String category;

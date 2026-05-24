@@ -1,8 +1,8 @@
 package com.catalystone.iv.jdbc.repository;
 
 import java.sql.ResultSet;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +32,13 @@ public class JdbcProductRepository {
     }
 
     public String nameById(long id) {
-        return null;
+        var sql = "Select NAME from PRODUCT where id = :id";
+        return jdbcTemplate.queryForObject(sql, Map.of("id", id), String.class);
     }
 
     public Long idByName(String name) {
-        return null;
+        var sql = "SELECT id FROM PRODUCT WHERE name = :name";
+        return jdbcTemplate.queryForObject(sql, Map.of("name", name), Long.class);
     }
 
     public List<CategoryCount> categoryCount() {
@@ -55,17 +57,53 @@ public class JdbcProductRepository {
     }
 
     public List<Long> allIdsAlphabeticalOrder() {
-        return Collections.emptyList();
+        var sql = """
+                SELECT id
+                FROM PRODUCT
+                ORDER BY name ASC, price DESC
+                """;
+
+        return jdbcTemplate.queryForList(sql, Map.of(), Long.class);
     }
 
 
     public Product productWithXHighestPrice(int parameter) {
-        return null;
+        var sql = """
+                SELECT id, name, price, category
+                FROM PRODUCT
+                ORDER BY price DESC
+                LIMIT 1 OFFSET :offset
+                """;
+
+        return jdbcTemplate.queryForObject(
+                sql,
+                Map.of("offset", parameter - 1),
+                (rs, rowNum) -> product(rs)
+        );
     }
 
     //returns Map<Id, Price> with Id sorted in ASC order
     public Map<Long, Double> getIdPriceMappingInAscOrder(List<Long> ids) {
-        return null;
+        var sql = """
+                SELECT id, price
+                FROM PRODUCT
+                WHERE id IN (:ids)
+                ORDER BY id ASC
+                """;
+
+        return jdbcTemplate.query(
+                sql,
+                Map.of("ids", ids),
+                rs -> {
+                    var result = new LinkedHashMap<Long, Double>();
+
+                    while (rs.next()) {
+                        result.put(rs.getLong("id"), rs.getDouble("price"));
+                    }
+
+                    return result;
+                }
+        );
     }
 
     @SneakyThrows
