@@ -1,13 +1,13 @@
 package com.catalystone.iv.jdbc.service;
 
-import com.catalystone.iv.IvApplicationTests;
-import com.catalystone.iv.jdbc.model.Product;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.catalystone.iv.IvApplicationTests;
+import com.catalystone.iv.jdbc.model.Product;
 
 class JdbcProductServiceTest extends IvApplicationTests {
 
@@ -25,7 +25,10 @@ class JdbcProductServiceTest extends IvApplicationTests {
     }
 
     private List<String> doSomething(List<Product> allProducts) {
-        return null;
+        return allProducts.stream()
+                .map(Product::getName)
+                .distinct()
+                .toList();
     }
 
 }
